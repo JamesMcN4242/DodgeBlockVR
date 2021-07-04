@@ -21,7 +21,7 @@ public static class BlockFactory
 
     public static Block CreateBlock(Vector3 startPosition, Vector3 endPosition, float speed)
     {
-        GameObject block = GameObject.Instantiate(s_blockPrefab, s_blockParent);
+        GameObject block = GameObject.Instantiate(s_blockPrefab, startPosition, Quaternion.identity, s_blockParent);
         Vector3 velocity = (endPosition - startPosition).normalized * speed;
 
         return new Block()
