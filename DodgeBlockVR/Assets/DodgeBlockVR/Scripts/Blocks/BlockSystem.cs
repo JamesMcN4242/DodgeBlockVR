@@ -12,6 +12,7 @@ public class BlockSystem
 
     private List<Block> m_blocks = null;
     private BlockSpawnerMono[] m_spawnerObjs = null;
+    private BlockData m_blockData = null;
     private Transform m_targetTransform = null;
 
     private float m_timeSinceBlockCreation = 0.0f;
@@ -24,6 +25,8 @@ public class BlockSystem
 
         m_spawnerObjs = Object.FindObjectsOfType<BlockSpawnerMono>();
         Debug.Assert(m_spawnerObjs.Length > 0, "No spawner objects were found in the scene");
+
+        m_blockData = Resources.Load<BlockData>("Data/BlockData");
 
         m_targetTransform = targetTransform;
         TimeBeforeNewBlockSpawn = 0.75f;
@@ -68,7 +71,7 @@ public class BlockSystem
             var spawner = m_spawnerObjs[Random.Range(0, m_spawnerObjs.Length)];
             Vector3 startPosition = spawner.transform.position;
             Vector3 endPosition = startPosition + (2f * (m_targetTransform.position - startPosition));
-            m_blocks.Add(BlockFactory.CreateBlock(startPosition, endPosition, spawner.GetNextBlockSpeed));
+            m_blocks.Add(BlockFactory.CreateBlock(startPosition, endPosition, m_blockData.GetNextBlockSpeed));
 
             m_timeSinceBlockCreation = 0.0f;
         }
