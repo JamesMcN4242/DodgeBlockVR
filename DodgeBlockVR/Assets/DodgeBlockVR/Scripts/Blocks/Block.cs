@@ -1,0 +1,13 @@
+﻿////////////////////////////////////////////////////////////
+/////   Block.cs
+/////   James McNeil - 2021
+////////////////////////////////////////////////////////////
+
+using UnityEngine;
+
+public struct Block
+{
+    public Transform BlockTransform;
+    public Vector3 Velocity;
+    public float TimeLeftAlive;
+}
