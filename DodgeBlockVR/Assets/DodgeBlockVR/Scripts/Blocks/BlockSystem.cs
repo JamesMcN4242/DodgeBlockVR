@@ -41,6 +41,15 @@ public class BlockSystem
         TryCreateMoreBlocks();
     }
 
+    public void DestroyAllBlocks()
+    {
+        foreach(Block block in m_blocks)
+        {
+            Object.Destroy(block.BlockTransform.gameObject);
+        }
+        m_blocks.Clear();
+    }
+
     private void UpdateBlocks(float dt)
     {
         for (int i = 0; i < m_blocks.Count; ++i)
