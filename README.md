@@ -10,3 +10,7 @@ Day one of the project has been a simplistic setup to the premiss of the game, a
 Unity's own XR package was created in the time since I last used the SteamVR plugin, so I'm currently unsure if both are required for new projects. Some reading is required tomorrow to find out and strip out any unnecessary files.
 
 The three hours of development today has seen blocks fly at the user and from scene defineable placements. Varying speeds can be applied to the blocks and collisions between them and the player are tracked and processed. Debug logs are the only messaging used at current to determine a player's score (debug set) and inform player's when they've lost.
+
+### Day Two (05/07/2021)
+Day two has been limited in the time available to tinker with the project. The main addition today has been the tracking off two VR controllers. Due to unfamiliarity with the new InputSystem this is currently completed through the older Tracked Pose Driver system. 
+As the current controller input (trigger only for now) displays I have opted to move towards using Unity's new input system. Although time was limited today I hopeful I can get the InputSystem functioning on a per controller basis tomorrow.
