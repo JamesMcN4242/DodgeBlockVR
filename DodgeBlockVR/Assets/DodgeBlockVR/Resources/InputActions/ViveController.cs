@@ -19,10 +19,18 @@ public class @ViveController : IInputActionCollection, IDisposable
             ""id"": ""3525cec0-17c8-4ca4-b99e-93bfb7ae70f0"",
             ""actions"": [
                 {
-                    ""name"": ""Grab"",
+                    ""name"": ""LeftGrab"",
                     ""type"": ""Value"",
-                    ""id"": ""3b1006e4-aca2-44a3-8f5a-130a30244d2c"",
-                    ""expectedControlType"": """",
+                    ""id"": ""8e5d651e-a986-4fd1-b234-1d99e246ed63"",
+                    ""expectedControlType"": ""Analog"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""RightGrab"",
+                    ""type"": ""Value"",
+                    ""id"": ""67058091-b8b5-49b2-875e-2e688ac58d93"",
+                    ""expectedControlType"": ""Analog"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -30,67 +38,23 @@ public class @ViveController : IInputActionCollection, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""143bb1cd-cc10-4eca-a2f0-a3664166fe91"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Grab"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""05f6913d-c316-48b2-a6bb-e225f14c7960"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Grab"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""886e731e-7071-4ae4-95c0-e61739dad6fd"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Touch"",
-                    ""action"": ""Grab"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""438d5965-ac4c-4d48-af64-375215ae3943"",
-                    ""path"": ""<ViveController>{LeftHand}/trigger"",
+                    ""id"": ""d65a032f-6a51-4a2d-9538-0c6f3779d713"",
+                    ""path"": ""<XRController>{LeftHand}/trigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Vive;XR"",
-                    ""action"": ""Grab"",
+                    ""action"": ""LeftGrab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b4e336a6-8c8c-4d8f-ae6d-4a0d9195a590"",
-                    ""path"": ""<ViveController>{RightHand}/trigger"",
+                    ""id"": ""c8f7703a-56d3-4d66-af2f-7879fc3ff8de"",
+                    ""path"": ""<XRController>{RightHand}/trigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Vive;XR"",
-                    ""action"": ""Grab"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""de31a4f3-d832-4fd8-a396-b7458097de86"",
-                    ""path"": ""*/{Trigger}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Grab"",
+                    ""action"": ""RightGrab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -684,7 +648,8 @@ public class @ViveController : IInputActionCollection, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Grab = m_Player.FindAction("Grab", throwIfNotFound: true);
+        m_Player_LeftGrab = m_Player.FindAction("LeftGrab", throwIfNotFound: true);
+        m_Player_RightGrab = m_Player.FindAction("RightGrab", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -746,12 +711,14 @@ public class @ViveController : IInputActionCollection, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
-    private readonly InputAction m_Player_Grab;
+    private readonly InputAction m_Player_LeftGrab;
+    private readonly InputAction m_Player_RightGrab;
     public struct PlayerActions
     {
         private @ViveController m_Wrapper;
         public PlayerActions(@ViveController wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Grab => m_Wrapper.m_Player_Grab;
+        public InputAction @LeftGrab => m_Wrapper.m_Player_LeftGrab;
+        public InputAction @RightGrab => m_Wrapper.m_Player_RightGrab;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -761,16 +728,22 @@ public class @ViveController : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
             {
-                @Grab.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
-                @Grab.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
-                @Grab.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
+                @LeftGrab.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftGrab;
+                @LeftGrab.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftGrab;
+                @LeftGrab.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftGrab;
+                @RightGrab.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightGrab;
+                @RightGrab.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightGrab;
+                @RightGrab.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightGrab;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Grab.started += instance.OnGrab;
-                @Grab.performed += instance.OnGrab;
-                @Grab.canceled += instance.OnGrab;
+                @LeftGrab.started += instance.OnLeftGrab;
+                @LeftGrab.performed += instance.OnLeftGrab;
+                @LeftGrab.canceled += instance.OnLeftGrab;
+                @RightGrab.started += instance.OnRightGrab;
+                @RightGrab.performed += instance.OnRightGrab;
+                @RightGrab.canceled += instance.OnRightGrab;
             }
         }
     }
@@ -936,7 +909,8 @@ public class @ViveController : IInputActionCollection, IDisposable
     }
     public interface IPlayerActions
     {
-        void OnGrab(InputAction.CallbackContext context);
+        void OnLeftGrab(InputAction.CallbackContext context);
+        void OnRightGrab(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

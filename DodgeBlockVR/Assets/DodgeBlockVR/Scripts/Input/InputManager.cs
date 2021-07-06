@@ -6,26 +6,63 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : MonoBehaviour
-{
-    private ControllerInputData[] m_controllerInputs = null;
+using static UnityEngine.Debug;
 
-    private enum ControllerType { LEFT, RIGHT };
+public class InputManager
+{
+    private enum ControllerType { LEFT, RIGHT, COUNT };
     public struct ControllerInputData
     {
         public float TriggerValue;
     }
 
-    public ControllerInputData LeftControllerData => m_controllerInputs[(int)ControllerType.LEFT];
-
-    private void Awake()
+    private struct ControllerInputActions
     {
-        m_controllerInputs = new ControllerInputData[2];
+        public InputAction m_grabAction;
     }
 
-    public void SetTriggerValue(InputAction.CallbackContext triggerData)
+    private InputActionMap m_inputActionMap = null;
+    private ControllerInputData[] m_controllerInputs = null;
+    private ControllerInputActions[] m_controllerActions;
+
+    public ControllerInputData LeftControllerData => m_controllerInputs[(int)ControllerType.LEFT];
+    public ControllerInputData RightControllerData => m_controllerInputs[(int)ControllerType.RIGHT];
+
+    public InputManager()
     {
-        //TODO: Seperate input to allow both triggers setting successfully
-        m_controllerInputs[(int)ControllerType.LEFT].TriggerValue = triggerData.ReadValue<float>();
+        m_controllerInputs = new ControllerInputData[(int)ControllerType.COUNT];
+
+        InputActionAsset inputAsset = Resources.Load<InputActionAsset>("InputActions/ViveController");
+        m_inputActionMap = inputAsset.FindActionMap("Player");
+        Assert(m_inputActionMap != null, "Input Action Map was not found");
+
+        m_controllerActions = GetControllerInputActions(m_inputActionMap);
+        m_inputActionMap.Enable();
+    }
+
+    public void UpdateInput()
+    {
+        for(int i = 0; i < (int)ControllerType.COUNT; ++i)
+        {
+            m_controllerInputs[i].TriggerValue = m_controllerActions[i].m_grabAction.ReadValue<float>();
+        }
+    }
+
+    private static ControllerInputActions[] GetControllerInputActions(InputActionMap actionMap)
+    {
+        return new ControllerInputActions[]
+        {
+            GetSpecificControllerInputActions(actionMap, ControllerType.LEFT),
+            GetSpecificControllerInputActions(actionMap, ControllerType.RIGHT)
+        };
+    }
+
+    private static ControllerInputActions GetSpecificControllerInputActions(InputActionMap actionMap, ControllerType type)
+    {
+        string prefix = type == ControllerType.LEFT ? "Left" : "Right";
+        return new ControllerInputActions
+        {
+            m_grabAction = actionMap.FindAction(prefix + "Grab")
+        };
     }
 }

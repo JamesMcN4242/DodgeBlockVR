@@ -6,10 +6,18 @@
             "id": "3525cec0-17c8-4ca4-b99e-93bfb7ae70f0",
             "actions": [
                 {
-                    "name": "Grab",
+                    "name": "LeftGrab",
                     "type": "Value",
-                    "id": "3b1006e4-aca2-44a3-8f5a-130a30244d2c",
-                    "expectedControlType": "",
+                    "id": "8e5d651e-a986-4fd1-b234-1d99e246ed63",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "RightGrab",
+                    "type": "Value",
+                    "id": "67058091-b8b5-49b2-875e-2e688ac58d93",
+                    "expectedControlType": "Analog",
                     "processors": "",
                     "interactions": ""
                 }
@@ -17,67 +25,23 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "143bb1cd-cc10-4eca-a2f0-a3664166fe91",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Grab",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "05f6913d-c316-48b2-a6bb-e225f14c7960",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Grab",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "886e731e-7071-4ae4-95c0-e61739dad6fd",
-                    "path": "<Touchscreen>/primaryTouch/tap",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Touch",
-                    "action": "Grab",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "438d5965-ac4c-4d48-af64-375215ae3943",
-                    "path": "<ViveController>{LeftHand}/trigger",
+                    "id": "d65a032f-6a51-4a2d-9538-0c6f3779d713",
+                    "path": "<XRController>{LeftHand}/trigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Vive;XR",
-                    "action": "Grab",
+                    "action": "LeftGrab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "b4e336a6-8c8c-4d8f-ae6d-4a0d9195a590",
-                    "path": "<ViveController>{RightHand}/trigger",
+                    "id": "c8f7703a-56d3-4d66-af2f-7879fc3ff8de",
+                    "path": "<XRController>{RightHand}/trigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Vive;XR",
-                    "action": "Grab",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "de31a4f3-d832-4fd8-a396-b7458097de86",
-                    "path": "*/{Trigger}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Grab",
+                    "action": "RightGrab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

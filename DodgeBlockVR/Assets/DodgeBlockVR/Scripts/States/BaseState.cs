@@ -12,12 +12,13 @@ public class BaseState : FlowStateBase
 
     protected override void StartPresentingState()
     {
-        m_inputManager = Object.FindObjectOfType<InputManager>();
+        m_inputManager = new InputManager();
     }
 
     protected override void UpdateActiveState()
     {
-        if (m_inputManager.LeftControllerData.TriggerValue > 0.0f)
+        m_inputManager.UpdateInput();
+        if (m_inputManager.LeftControllerData.TriggerValue > 0.0f || m_inputManager.RightControllerData.TriggerValue > 0.0f)
         {
             ControllingStateStack.PushState(new GameState());
         }
