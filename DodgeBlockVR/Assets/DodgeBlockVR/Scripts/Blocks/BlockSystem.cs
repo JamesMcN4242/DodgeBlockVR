@@ -8,15 +8,12 @@ using UnityEngine;
 
 public class BlockSystem
 {
-    private const int k_minimumBlockCount = 3;
-
     private List<Block> m_blocks = null;
     private BlockSpawnerMono[] m_spawnerObjs = null;
     private BlockData m_blockData = null;
     private Transform m_targetTransform = null;
 
     private float m_timeSinceBlockCreation = 0.0f;
-    public float TimeBeforeNewBlockSpawn { get; set; }
 
     public BlockSystem(Transform targetTransform)
     {
@@ -29,8 +26,7 @@ public class BlockSystem
         m_blockData = Resources.Load<BlockData>("Data/BlockData");
 
         m_targetTransform = targetTransform;
-        TimeBeforeNewBlockSpawn = 0.75f;
-        TryCreateMoreBlocks();
+        CreateNewBlock();
     }
 
     public void Update(float dt)
@@ -77,17 +73,22 @@ public class BlockSystem
     {
         if (ShouldCreateNewBlock())
         {
-            var spawner = m_spawnerObjs[Random.Range(0, m_spawnerObjs.Length)];
-            Vector3 startPosition = spawner.transform.position;
-            Vector3 endPosition = startPosition + (2f * (m_targetTransform.position - startPosition));
-            m_blocks.Add(BlockFactory.CreateBlock(startPosition, endPosition, m_blockData.GetNextBlockSpeed));
-
-            m_timeSinceBlockCreation = 0.0f;
+            CreateNewBlock();
         }
+    }
+
+    private void CreateNewBlock()
+    {
+        var spawner = m_spawnerObjs[Random.Range(0, m_spawnerObjs.Length)];
+        Vector3 startPosition = spawner.transform.position;
+        Vector3 endPosition = startPosition + (2f * (m_targetTransform.position - startPosition));
+        m_blocks.Add(BlockFactory.CreateBlock(startPosition, endPosition, m_blockData.GetNextBlockSpeed));
+
+        m_timeSinceBlockCreation = 0.0f;
     }
 
     private bool ShouldCreateNewBlock()
     {
-        return m_timeSinceBlockCreation > TimeBeforeNewBlockSpawn || m_blocks.Count < k_minimumBlockCount;
+        return m_timeSinceBlockCreation > m_blockData.m_minimumTimeBeforeNextSpawn && m_blocks.Count < m_blockData.m_maximumBlocks;
     }
 }

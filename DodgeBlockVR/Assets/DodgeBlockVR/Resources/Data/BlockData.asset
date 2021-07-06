@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad7662f1d6bacc94c80a4541b8007d8e, type: 3}
   m_Name: BlockData
   m_EditorClassIdentifier: 
-  m_minimumSpeed: 2
-  m_maximumSpeed: 3
+  m_maximumBlocks: 3
+  m_minimumTimeBeforeNextSpawn: 3.2
+  m_minimumSpeed: 0.5
+  m_maximumSpeed: 1.43
