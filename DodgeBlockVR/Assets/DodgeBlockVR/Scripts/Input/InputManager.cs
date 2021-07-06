@@ -5,6 +5,7 @@
 
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 
 using static UnityEngine.Debug;
 
@@ -45,6 +46,15 @@ public class InputManager
         for(int i = 0; i < (int)ControllerType.COUNT; ++i)
         {
             m_controllerInputs[i].TriggerValue = m_controllerActions[i].m_grabAction.ReadValue<float>();
+        }
+    }
+
+    public void SendRumbleToController(ControllerType targetController, float amplitude, float duration)
+    {
+        var controller = (targetController == ControllerType.LEFT ? XRControllerWithRumble.leftHand : XRControllerWithRumble.rightHand) as XRControllerWithRumble;
+        if(controller != null)
+        {
+            controller.SendImpulse(amplitude, duration);
         }
     }
 

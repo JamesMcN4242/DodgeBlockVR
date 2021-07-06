@@ -16,11 +16,13 @@ public class GameState : FlowStateBase
     private PlayerColliderMono m_playerCollider = null;
     private PlayerControllerColliderMono[] m_controllerColliders = null;
 
+    private InputRumbleSettings m_rumbleSettings;
     private PlayerData m_playerData;
 
     public GameState(InputManager inputManager)
     {
         m_inputManager = inputManager;
+        m_rumbleSettings = Resources.Load<InputRumbleSettings>("Data/InputRumbleSettings");
     }
 
     protected override void StartPresentingState()
@@ -39,8 +41,8 @@ public class GameState : FlowStateBase
 
     protected override void UpdateActiveState()
     {
-        m_inputManager.UpdateInput();
-        
+        m_inputManager.UpdateInput();      
+
         //TODO: Add a score manager that adds set amount over X seconds instead of per frame        
         ++m_playerData.Score;
     }
@@ -92,7 +94,8 @@ public class GameState : FlowStateBase
             var blockTransforms = m_controllerColliders[i].ConsumeCollisions();
             foreach(Transform blockTrans in blockTransforms)
             {
-                //TODO: Haptic feedback
+                //TODO: Score addition and block break apart
+                m_inputManager.SendRumbleToController((InputManager.ControllerType)i, m_rumbleSettings.m_amplitude, m_rumbleSettings.m_duration);
                 m_blockSystem.DestroyBlock(blockTrans);
             }
         }
