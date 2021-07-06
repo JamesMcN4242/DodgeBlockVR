@@ -20,6 +20,22 @@
                     "expectedControlType": "Analog",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "LeftPrimary",
+                    "type": "Button",
+                    "id": "7ba2bc7e-6f56-4003-83e7-b3a9f1026d6a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "RightPrimary",
+                    "type": "Button",
+                    "id": "00bb4152-6545-40d5-b6f5-7bd4c70582b9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -42,6 +58,28 @@
                     "processors": "",
                     "groups": "Vive;XR",
                     "action": "RightGrab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ddfca01a-9ca3-4dc3-83ec-89d0f6e25265",
+                    "path": "<XRController>{LeftHand}/primary",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR;Vive",
+                    "action": "LeftPrimary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c12acb9a-eaf7-4ddd-8811-6d2647c6f1d5",
+                    "path": "<XRController>{RightHand}/primary",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR;Vive",
+                    "action": "RightPrimary",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

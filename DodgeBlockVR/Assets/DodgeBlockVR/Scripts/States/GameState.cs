@@ -41,7 +41,13 @@ public class GameState : FlowStateBase
 
     protected override void UpdateActiveState()
     {
-        m_inputManager.UpdateInput();      
+        m_inputManager.UpdateInput();
+
+        if(m_inputManager.LeftControllerData.PrimaryTriggered)
+        {
+            ControllingStateStack.PushState(new PauseState(m_inputManager));
+            return;
+        }
 
         //TODO: Add a score manager that adds set amount over X seconds instead of per frame        
         ++m_playerData.Score;

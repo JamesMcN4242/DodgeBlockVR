@@ -15,11 +15,13 @@ public class InputManager
     public struct ControllerInputData
     {
         public float TriggerValue;
+        public bool PrimaryTriggered;
     }
 
     private struct ControllerInputActions
     {
         public InputAction m_grabAction;
+        public InputAction m_primaryAction;
     }
 
     private InputActionMap m_inputActionMap = null;
@@ -46,6 +48,7 @@ public class InputManager
         for(int i = 0; i < (int)ControllerType.COUNT; ++i)
         {
             m_controllerInputs[i].TriggerValue = m_controllerActions[i].m_grabAction.ReadValue<float>();
+            m_controllerInputs[i].PrimaryTriggered = m_controllerActions[i].m_primaryAction.triggered;
         }
     }
 
@@ -72,7 +75,8 @@ public class InputManager
         string prefix = type == ControllerType.LEFT ? "Left" : "Right";
         return new ControllerInputActions
         {
-            m_grabAction = actionMap.FindAction(prefix + "Grab")
+            m_grabAction = actionMap.FindAction(prefix + "Grab"),
+            m_primaryAction = actionMap.FindAction(prefix + "Primary")
         };
     }
 }

@@ -33,6 +33,22 @@ public class @ViveController : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Analog"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""LeftPrimary"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ba2bc7e-6f56-4003-83e7-b3a9f1026d6a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""RightPrimary"",
+                    ""type"": ""Button"",
+                    ""id"": ""00bb4152-6545-40d5-b6f5-7bd4c70582b9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -55,6 +71,28 @@ public class @ViveController : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Vive;XR"",
                     ""action"": ""RightGrab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ddfca01a-9ca3-4dc3-83ec-89d0f6e25265"",
+                    ""path"": ""<XRController>{LeftHand}/primary"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR;Vive"",
+                    ""action"": ""LeftPrimary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c12acb9a-eaf7-4ddd-8811-6d2647c6f1d5"",
+                    ""path"": ""<XRController>{RightHand}/primary"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR;Vive"",
+                    ""action"": ""RightPrimary"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -650,6 +688,8 @@ public class @ViveController : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_LeftGrab = m_Player.FindAction("LeftGrab", throwIfNotFound: true);
         m_Player_RightGrab = m_Player.FindAction("RightGrab", throwIfNotFound: true);
+        m_Player_LeftPrimary = m_Player.FindAction("LeftPrimary", throwIfNotFound: true);
+        m_Player_RightPrimary = m_Player.FindAction("RightPrimary", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -713,12 +753,16 @@ public class @ViveController : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_LeftGrab;
     private readonly InputAction m_Player_RightGrab;
+    private readonly InputAction m_Player_LeftPrimary;
+    private readonly InputAction m_Player_RightPrimary;
     public struct PlayerActions
     {
         private @ViveController m_Wrapper;
         public PlayerActions(@ViveController wrapper) { m_Wrapper = wrapper; }
         public InputAction @LeftGrab => m_Wrapper.m_Player_LeftGrab;
         public InputAction @RightGrab => m_Wrapper.m_Player_RightGrab;
+        public InputAction @LeftPrimary => m_Wrapper.m_Player_LeftPrimary;
+        public InputAction @RightPrimary => m_Wrapper.m_Player_RightPrimary;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -734,6 +778,12 @@ public class @ViveController : IInputActionCollection, IDisposable
                 @RightGrab.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightGrab;
                 @RightGrab.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightGrab;
                 @RightGrab.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightGrab;
+                @LeftPrimary.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftPrimary;
+                @LeftPrimary.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftPrimary;
+                @LeftPrimary.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftPrimary;
+                @RightPrimary.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightPrimary;
+                @RightPrimary.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightPrimary;
+                @RightPrimary.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightPrimary;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -744,6 +794,12 @@ public class @ViveController : IInputActionCollection, IDisposable
                 @RightGrab.started += instance.OnRightGrab;
                 @RightGrab.performed += instance.OnRightGrab;
                 @RightGrab.canceled += instance.OnRightGrab;
+                @LeftPrimary.started += instance.OnLeftPrimary;
+                @LeftPrimary.performed += instance.OnLeftPrimary;
+                @LeftPrimary.canceled += instance.OnLeftPrimary;
+                @RightPrimary.started += instance.OnRightPrimary;
+                @RightPrimary.performed += instance.OnRightPrimary;
+                @RightPrimary.canceled += instance.OnRightPrimary;
             }
         }
     }
@@ -911,6 +967,8 @@ public class @ViveController : IInputActionCollection, IDisposable
     {
         void OnLeftGrab(InputAction.CallbackContext context);
         void OnRightGrab(InputAction.CallbackContext context);
+        void OnLeftPrimary(InputAction.CallbackContext context);
+        void OnRightPrimary(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
