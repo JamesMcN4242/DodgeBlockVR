@@ -10,7 +10,7 @@ using static UnityEngine.Debug;
 
 public class InputManager
 {
-    private enum ControllerType { LEFT, RIGHT, COUNT };
+    public enum ControllerType { LEFT, RIGHT, COUNT };
     public struct ControllerInputData
     {
         public float TriggerValue;

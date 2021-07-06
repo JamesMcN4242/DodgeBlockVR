@@ -37,6 +37,19 @@ public class BlockSystem
         TryCreateMoreBlocks();
     }
 
+    public void DestroyBlock(Transform block)
+    {
+        for(int i = 0; i < m_blocks.Count; ++i)
+        {
+            if(block == m_blocks[i].BlockTransform)
+            {
+                Object.Destroy(m_blocks[i].BlockTransform.gameObject);
+                m_blocks.RemoveAt(i);
+                return;
+            }
+        }
+    }
+
     public void DestroyAllBlocks()
     {
         foreach(Block block in m_blocks)
