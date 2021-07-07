@@ -6,5 +6,4 @@
 public struct PlayerData
 {
     public int Lives;
-    public long Score;
 }

@@ -10,6 +10,7 @@ public class GameState : FlowStateBase
 {
     const int k_startingPlayerLives = 3;
 
+    private ScoreSystem m_scoreSystem = null;
     private BlockSystem m_blockSystem = null;
     private InputManager m_inputManager = null;
 
@@ -23,13 +24,14 @@ public class GameState : FlowStateBase
     {
         m_inputManager = inputManager;
         m_rumbleSettings = Resources.Load<InputRumbleSettings>("Data/InputRumbleSettings");
+        m_scoreSystem = new ScoreSystem();
     }
 
     protected override void StartPresentingState()
     {
         m_playerCollider = Object.FindObjectOfType<PlayerColliderMono>();
         m_blockSystem = new BlockSystem(m_playerCollider.transform);
-        m_playerData = new PlayerData() { Lives = k_startingPlayerLives, Score = 0 };
+        m_playerData = new PlayerData() { Lives = k_startingPlayerLives };
 
         Transform parentTransform = m_playerCollider.transform.parent;
         m_controllerColliders = new PlayerControllerColliderMono[2]
@@ -48,15 +50,13 @@ public class GameState : FlowStateBase
             ControllingStateStack.PushState(new PauseState(m_inputManager));
             return;
         }
-
-        //TODO: Add a score manager that adds set amount over X seconds instead of per frame        
-        ++m_playerData.Score;
     }
 
     protected override void FixedUpdateActiveState()
     {
         float dt = Time.fixedDeltaTime;
 
+        m_scoreSystem.Update(dt);
         m_blockSystem.Update(dt);
         Physics.Simulate(dt);
 
@@ -87,7 +87,9 @@ public class GameState : FlowStateBase
 
         if (m_playerData.Lives <= 0)
         {
-            //TODO: Game over state.
+            Debug.Log($"Player achieved a score of {m_scoreSystem.CurrentScore}");
+
+            //TODO: Change to game over state.
             ControllingStateStack.PopState(this);
         }
     }
@@ -101,7 +103,7 @@ public class GameState : FlowStateBase
             var blockTransforms = m_controllerColliders[i].ConsumeCollisions();
             foreach(Transform blockTrans in blockTransforms)
             {
-                //TODO: Score addition and block break apart
+                m_scoreSystem.AddScore(ScoreSystem.ScoreType.BLOCK_HIT);
                 m_inputManager.SendRumbleToController((InputManager.ControllerType)i, m_rumbleSettings.m_amplitude, m_rumbleSettings.m_duration);
                 m_blockSystem.DestroyBlock(blockTrans);
             }
