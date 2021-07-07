@@ -22,3 +22,6 @@ A pause state was added to the game. Since I've yet to implement UI into the gam
 https://user-images.githubusercontent.com/25529411/124666774-70014180-dea6-11eb-9696-1d0f6759cf9f.mov
 
 Overall I'm happy with the results today has brought, as there now some fun to actually playing the game - even if this wasn't the initial plan for the prototype. Adding some haptic feedback (rumble) for sucessful punches has also made the game feel a bit nicer. Tomorrow will have a very constrained amount of time, so I think I'll focus it on getting a score system in place and ready to hook up to some UI which Thursday will aim to complete.
+
+### Day Four (07/07/2021)
+As mentioned the day before, only a short amount of time was able to be dedicated to the project today. I am content with the score system I got in under the time constraints as it was purely smooth sailings. In an ideal world I'd like to try make the score interaction types more hands off in the future, but for this project I don't see it being an issue at all. Tomorrow I'm excited to finally get into the UI and UX hook ups for some of the screens. Having played many VR games I'm excited to try take over my favourite types of UX into this prototype.
