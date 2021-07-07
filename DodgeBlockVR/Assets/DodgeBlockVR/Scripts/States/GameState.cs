@@ -81,6 +81,7 @@ public class GameState : FlowStateBase
         var colliderObjs = m_playerCollider.ConsumeCollisions();
         foreach (GameObject go in colliderObjs)
         {
+            m_blockSystem.DestroyBlock(go.transform);
             --m_playerData.Lives;
         }
 

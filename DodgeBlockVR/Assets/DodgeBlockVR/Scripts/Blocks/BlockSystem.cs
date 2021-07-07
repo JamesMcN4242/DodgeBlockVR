@@ -43,6 +43,7 @@ public class BlockSystem
         {
             if(block == m_blocks[i].BlockTransform)
             {
+                //TODO: Block break apart
                 Object.Destroy(m_blocks[i].BlockTransform.gameObject);
                 m_blocks.RemoveAt(i);
                 return;
