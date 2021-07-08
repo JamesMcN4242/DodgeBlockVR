@@ -91,7 +91,7 @@ public class GameState : FlowStateBase
             Debug.Log($"Player achieved a score of {m_scoreSystem.CurrentScore}");
 
             //TODO: Change to game over state.
-            ControllingStateStack.PopState(this);
+            ControllingStateStack.ChangeState(new GameOverState(m_inputManager, m_playerCollider.transform, m_scoreSystem.CurrentScore));
         }
     }
 
