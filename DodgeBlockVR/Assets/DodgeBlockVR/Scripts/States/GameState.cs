@@ -20,16 +20,17 @@ public class GameState : FlowStateBase
     private InputRumbleSettings m_rumbleSettings;
     private PlayerData m_playerData;
 
-    public GameState(InputManager inputManager)
+    public GameState(InputManager inputManager, PlayerColliderMono playerCollider)
     {
         m_inputManager = inputManager;
         m_rumbleSettings = Resources.Load<InputRumbleSettings>("Data/InputRumbleSettings");
+
+        m_playerCollider = playerCollider;
         m_scoreSystem = new ScoreSystem();
     }
 
     protected override void StartPresentingState()
     {
-        m_playerCollider = Object.FindObjectOfType<PlayerColliderMono>();
         m_blockSystem = new BlockSystem(m_playerCollider.transform);
         m_playerData = new PlayerData() { Lives = k_startingPlayerLives };
 

@@ -15,6 +15,11 @@ namespace PersonalFramework
         public void PushState(FlowStateBase state)
         {
             Debug.Assert(m_stateStack.Count == 0 || m_stateStack.Peek() != state, "Trying to push already active state");
+
+            if (m_stateStack.Count > 0)
+            {
+                m_stateStack.Peek().OnBackgrounded();
+            }
             m_stateStack.Push(state);
             state.SetStateController(this);
         }
@@ -33,7 +38,11 @@ namespace PersonalFramework
                 state.UpdateState();
                 if (state.IsDismissed())
                 {
-                    m_stateStack.Pop();
+                    m_stateStack.Pop(); 
+                    if (m_stateStack.Count > 0)
+                    {
+                        m_stateStack.Peek().OnReturnToForeground();
+                    }
                 }
             }
         }

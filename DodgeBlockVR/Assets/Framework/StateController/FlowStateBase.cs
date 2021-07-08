@@ -76,6 +76,14 @@ namespace PersonalFramework
             }
         }
 
+        public virtual void OnReturnToForeground()
+        {
+        }
+
+        public virtual void OnBackgrounded()
+        {
+        }
+
         protected virtual void HandleMessage(object message)
         {
         }
