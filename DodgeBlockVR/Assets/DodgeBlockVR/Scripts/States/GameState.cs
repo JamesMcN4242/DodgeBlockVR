@@ -48,7 +48,7 @@ public class GameState : FlowStateBase
 
         if(m_inputManager.LeftControllerData.PrimaryTriggered)
         {
-            ControllingStateStack.PushState(new PauseState(m_inputManager));
+            ControllingStateStack.PushState(new PauseState(m_inputManager, m_playerCollider.transform));
             return;
         }
     }
