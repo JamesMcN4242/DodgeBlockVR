@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BlockData
   m_EditorClassIdentifier: 
   m_maximumBlocks: 11
-  m_minimumTimeBeforeNextSpawn: 0.93
-  m_minimumSpeed: 1.51
+  m_minimumTimeBeforeNextSpawn: 0.23
+  m_minimumSpeed: 2
   m_maximumSpeed: 4.37
