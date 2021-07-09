@@ -21,6 +21,7 @@ public static class BlockFactory
 
     public static Block CreateBlock(Vector3 startPosition, Vector3 endPosition, float speed)
     {
+        //TODO: Make a pooling system instead of all this repeated object creation and deletion
         GameObject block = GameObject.Instantiate(s_blockPrefab, startPosition, Quaternion.identity, s_blockParent);
         Vector3 velocity = (endPosition - startPosition).normalized * speed;
 

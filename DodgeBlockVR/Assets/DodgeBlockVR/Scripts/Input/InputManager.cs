@@ -61,6 +61,11 @@ public class InputManager
         }
     }
 
+    public ControllerInputData GetControllerData(ControllerType controllerType)
+    {
+        return m_controllerInputs[(int)controllerType];
+    }
+
     private static ControllerInputActions[] GetControllerInputActions(InputActionMap actionMap)
     {
         return new ControllerInputActions[]

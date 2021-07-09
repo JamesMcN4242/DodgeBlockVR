@@ -3,6 +3,7 @@
 /////   James McNeil - 2021
 ////////////////////////////////////////////////////////////
 
+using System;
 using PersonalFramework;
 using UnityEngine;
 
@@ -48,7 +49,7 @@ public class GameState : FlowStateBase
 
         if(m_inputManager.LeftControllerData.PrimaryTriggered)
         {
-            ControllingStateStack.PushState(new PauseState(m_inputManager, m_playerCollider.transform));
+            ControllingStateStack.PushState(new PauseState(m_inputManager, m_playerCollider.transform, Array.ConvertAll(m_controllerColliders, controller => controller.transform)));
             return;
         }
     }
