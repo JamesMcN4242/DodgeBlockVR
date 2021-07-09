@@ -49,7 +49,7 @@ public class GameState : FlowStateBase
 
         if(m_inputManager.LeftControllerData.PrimaryTriggered)
         {
-            ControllingStateStack.PushState(new PauseState(m_inputManager, m_playerCollider.transform, Array.ConvertAll(m_controllerColliders, controller => controller.transform)));
+            ControllingStateStack.PushState(new PauseState(m_inputManager, m_playerCollider.transform, Array.ConvertAll(m_controllerColliders, controller => controller.transform), m_blockSystem));
             return;
         }
     }

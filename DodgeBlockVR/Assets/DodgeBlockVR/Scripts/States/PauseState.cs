@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class PauseState : FlowStateBase
 {
-    private const float k_uiOffsetDistance = 2.5f;
+    private const float k_uiOffsetDistance = 3f;
     private static readonly int k_uiLayerMask = 1 << LayerMask.NameToLayer("UI");
 
     private InputManager m_inputManager = null;
@@ -18,15 +18,17 @@ public class PauseState : FlowStateBase
     private Transform m_playerTransform = null;
     private Transform m_pauseUI = null;
 
+    private BlockSystem m_blockSystem = null;
     private LineRenderer m_lineRenderObject = null;
     private InputManager.ControllerType m_focusedController = InputManager.ControllerType.RIGHT;
     private Image m_currentRayTarget = null;
 
-    public PauseState(InputManager inputManager, Transform playerTransform, Transform[] controllerTransforms)
+    public PauseState(InputManager inputManager, Transform playerTransform, Transform[] controllerTransforms, BlockSystem blockSystem)
     {
         m_inputManager = inputManager;
         m_playerTransform = playerTransform;
         m_controllerTransforms = controllerTransforms;
+        m_blockSystem = blockSystem;
 
         GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/PauseMenu");
         Vector3 spawnPosition = m_playerTransform.position + (m_playerTransform.forward * k_uiOffsetDistance);
@@ -53,10 +55,11 @@ public class PauseState : FlowStateBase
             return;
         }
 
-        if(m_inputManager.GetControllerData(m_focusedController).TriggerValue >= 0.9f)
-        {
-            //TODO: Push new state for updating values
-            Debug.Log("Attempting to push state");
+        if(m_inputManager.GetControllerData(m_focusedController).TriggerValue >= 0.9f && m_lineRenderObject != null)
+        {         
+            UpdateValueState newState = new UpdateValueState(34, 1, 50, null, m_inputManager, m_playerTransform);
+            //newState.SetPopupText();
+            ControllingStateStack.PushState(newState);
             return;
         }
 
