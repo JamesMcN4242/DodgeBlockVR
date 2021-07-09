@@ -55,7 +55,7 @@ public class PauseState : FlowStateBase
             return;
         }
 
-        if(m_inputManager.GetControllerData(m_focusedController).TriggerValue >= 0.9f && m_lineRenderObject != null)
+        if(m_inputManager.GetControllerData(m_focusedController).TriggerValue >= 0.9f && m_currentRayTarget != null)
         {         
             UpdateValueState newState = new UpdateValueState(34, 1, 50, null, m_inputManager, m_playerTransform);
             //newState.SetPopupText();

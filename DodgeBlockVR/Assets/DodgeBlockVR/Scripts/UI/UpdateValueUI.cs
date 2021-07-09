@@ -25,6 +25,6 @@ public class UpdateValueUI : MonoBehaviour
     public void SetCurrentValue(int current, int min, int max)
     {
         m_currentValueText.text = current.ToString();
-        m_fillImage.fillAmount = (current - min) / max;
+        m_fillImage.fillAmount = (float)(current - min) / (float)max;
     }
 }

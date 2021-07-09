@@ -10,7 +10,7 @@ using UnityEngine;
 public class UpdateValueState : FlowStateBase
 {
     private const float k_uiOffsetDistance = 2.5f;
-    private const float k_timeBeforeChange = 0.3f;
+    private const float k_timeBeforeChange = 0.15f;
     private readonly int k_minimumVal;
     private readonly int k_maximumVal;
 
@@ -66,12 +66,12 @@ public class UpdateValueState : FlowStateBase
         if(leftGripActive && m_leftGripHoldTime >= k_timeBeforeChange && m_currentVal > k_minimumVal)
         {
             m_leftGripHoldTime = 0.0f;
-            m_updatedValueAction(m_currentVal--);
+            m_updatedValueAction(--m_currentVal);
         }
         else if(rightGripActive && m_rightGripHoldTime >= k_timeBeforeChange && m_currentVal < k_maximumVal)
         {
             m_rightGripHoldTime = 0.0f;
-            m_updatedValueAction(m_currentVal++);
+            m_updatedValueAction(++m_currentVal);
         }
     }
 
