@@ -88,6 +88,16 @@ public class PauseState : FlowStateBase
         m_lineRenderObject.enabled = false;
     }
 
+    public override void OnBackgrounded()
+    {
+        m_lineRenderObject.enabled = false;
+    }
+
+    public override void OnReturnToForeground()
+    {
+        m_lineRenderObject.enabled = true;
+    }
+
     private void UpdateLinePosition()
     {
         const float lineDistance = 10.0f;
