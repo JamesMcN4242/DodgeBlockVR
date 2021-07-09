@@ -56,9 +56,19 @@ public class PauseState : FlowStateBase
         }
 
         if(m_inputManager.GetControllerData(m_focusedController).TriggerValue >= 0.9f && m_currentRayTarget != null)
-        {         
-            UpdateValueState newState = new UpdateValueState(34, 1, 50, null, m_inputManager, m_playerTransform);
-            //newState.SetPopupText();
+        {
+            UpdateValueState newState = null;
+            if (m_currentRayTarget.name == "MaxBlockCount")
+            {
+                newState = new UpdateValueState(m_blockSystem.MaxBlocks, BlockData.k_minimumBlocks, BlockData.k_maximumBlocks, m_blockSystem.SetMaxBlockCount, m_inputManager, m_playerTransform);
+                newState.SetPopupText("Max Block Count");
+            }
+            else
+            {
+                newState = new UpdateValueState((int)m_blockSystem.MaxSpeed, (int)BlockData.k_minimumSpeed, (int)BlockData.k_maximumSpeed, m_blockSystem.SetMaxBlockSpeed, m_inputManager, m_playerTransform);
+                newState.SetPopupText("Max Block Speed (ms)");
+            }
+
             ControllingStateStack.PushState(newState);
             return;
         }

@@ -8,12 +8,18 @@ using UnityEngine;
 
 public class BlockSystem
 {
+    private const string k_maxBlockSpeedKey = "MaxBlockSpeed";
+    private const string k_maxBlockCountKey = "MaxBlockCountKey";
+
     private List<Block> m_blocks = null;
     private BlockSpawnerMono[] m_spawnerObjs = null;
     private BlockData m_blockData = null;
     private Transform m_targetTransform = null;
 
     private float m_timeSinceBlockCreation = 0.0f;
+
+    public int MaxBlocks { get; private set; }
+    public float MaxSpeed { get; private set; }
 
     public BlockSystem(Transform targetTransform)
     {
@@ -24,6 +30,8 @@ public class BlockSystem
         Debug.Assert(m_spawnerObjs.Length > 0, "No spawner objects were found in the scene");
 
         m_blockData = Resources.Load<BlockData>("Data/BlockData");
+        MaxBlocks = PlayerPrefs.GetInt(k_maxBlockCountKey, m_blockData.m_maximumBlocks);
+        MaxSpeed = PlayerPrefs.GetFloat(k_maxBlockSpeedKey, m_blockData.m_maximumSpeed);
 
         m_targetTransform = targetTransform;
         CreateNewBlock();
@@ -96,13 +104,29 @@ public class BlockSystem
         var spawner = m_spawnerObjs[Random.Range(0, m_spawnerObjs.Length)];
         Vector3 startPosition = spawner.transform.position;
         Vector3 endPosition = startPosition + (2f * (m_targetTransform.position - startPosition));
-        m_blocks.Add(BlockFactory.CreateBlock(startPosition, endPosition, m_blockData.GetNextBlockSpeed));
+        m_blocks.Add(BlockFactory.CreateBlock(startPosition, endPosition, GetNextBlockSpeed));
 
         m_timeSinceBlockCreation = 0.0f;
     }
 
     private bool ShouldCreateNewBlock()
     {
-        return m_timeSinceBlockCreation > m_blockData.m_minimumTimeBeforeNextSpawn && m_blocks.Count < m_blockData.m_maximumBlocks;
+        return m_timeSinceBlockCreation > m_blockData.m_minimumTimeBeforeNextSpawn && m_blocks.Count < MaxBlocks;
     }
+
+    public void SetMaxBlockSpeed(int maxBlockSpeed)
+    {
+        MaxSpeed = (float)maxBlockSpeed;
+        PlayerPrefs.SetFloat(k_maxBlockSpeedKey, MaxSpeed);
+        PlayerPrefs.Save();
+    }
+
+    public void SetMaxBlockCount(int maxBlockCount)
+    {
+        MaxBlocks = maxBlockCount;
+        PlayerPrefs.SetInt(k_maxBlockCountKey, MaxBlocks);
+        PlayerPrefs.Save();
+    }
+
+    private float GetNextBlockSpeed => Random.Range(m_blockData.m_minimumSpeed, MaxSpeed);
 }
