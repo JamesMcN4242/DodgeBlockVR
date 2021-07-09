@@ -32,3 +32,14 @@ Simplistic (non-pretty) UI screens have been added to the game. These display th
 https://user-images.githubusercontent.com/25529411/124990192-f1d4a480-e037-11eb-8fa2-64d34fcc273d.mov
 
 Tomorrow is the last day to work on this project before my self inflicted deadline. As a result I'm weighing up what I could realistically get done in the final 2-3 hours that would add the best experience to this very basic game. I may attempt to flesh out the pause menu to allow the user to more dynamically change the difficulty of the game to their own liking. That or I may try to make the game actually look good, as opposed to it's current default Unity UI and whiteboxed state. Seems like a decision for tomorrow.
+
+### Day Six - The Finale (09/07/2021)
+In the project's final planned hours I opted to create some gameplay settings that could be edited from the pause menu. The two options added allowed the player to now choose the maximum amount of blocks at any one time, as well as the maximum speed those blocks could go at. This allows different players, with different abilities and accessbility requirements to set the game to a difficulty that matches their own abilities. The final gameplay video with these editable settings can be seen below.
+
+https://user-images.githubusercontent.com/25529411/125140964-a1c71200-e10b-11eb-9839-755c7116bff3.mov
+
+### Closing Remarks
+Given the time frame the project was set within I'm happy with the end results. In the future, after I tackle my long list of side projects and personal development tasks, I'd may come back to this repo in order to make the game look and feel nicer. A general polish pass of this whitebox simplistic game could make a world of difference. 
+The project has served as a good refresher on making content for VR through the Unity engine. This experience certainly gave me a better understanding and appreciation of Unity's new input system as well, which is not something I expected to use at the start. In the end I think the largest difficulty this prototype faced was a lack of strong vision on what I wanted to achieve within the time frame. Going forward I will attempt to set stricter goals in place for my personal projects so I can get the most out of them. That isn't of course to say I won't ever get distracted and follow fun tangents again!
+
+Thank you for reading along and/or taking an interest in this project. I hope you (the reader) are having a great day 👋
