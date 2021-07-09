@@ -35,9 +35,10 @@ public class PauseState : FlowStateBase
         Vector3 facePoint = 2f * spawnPosition - playerTransform.position;
         m_pauseUI.forward = (facePoint - spawnPosition).normalized;
 
-        m_lineRenderObject = new GameObject("LineRenderObj").AddComponent<LineRenderer>();
+        m_lineRenderObject = GameObject.Find("LinePointer").GetComponent<LineRenderer>();
+        m_lineRenderObject.enabled = true;
         m_lineRenderObject.startWidth = 0.02f;
-        m_lineRenderObject.endWidth = 0.02f;
+        m_lineRenderObject.endWidth = 0.0f;
         m_lineRenderObject.startColor = Color.cyan;
         m_lineRenderObject.endColor = Color.cyan;
         UpdateLinePosition();
@@ -56,16 +57,10 @@ public class PauseState : FlowStateBase
         {
             //TODO: Push new state for updating values
             Debug.Log("Attempting to push state");
+            return;
         }
 
-        if(m_inputManager.LeftControllerData.TriggerValue > m_inputManager.RightControllerData.TriggerValue)
-        {
-            m_focusedController = InputManager.ControllerType.LEFT;
-        }
-        else if(m_inputManager.RightControllerData.TriggerValue > m_inputManager.LeftControllerData.TriggerValue)
-        {
-            m_focusedController = InputManager.ControllerType.RIGHT;
-        }
+        UpdateDominantController();
     }
 
     protected override void FixedUpdateActiveState()
@@ -77,7 +72,7 @@ public class PauseState : FlowStateBase
     protected override void StartDismissingState()
     {
         Object.Destroy(m_pauseUI.gameObject);
-        Object.Destroy(m_lineRenderObject.gameObject);
+        m_lineRenderObject.enabled = false;
     }
 
     private void UpdateLinePosition()
@@ -97,13 +92,25 @@ public class PauseState : FlowStateBase
             {
                 m_currentRayTarget = hit.collider.GetComponent<Image>();
                 m_currentRayTarget.color = Color.gray;
-                m_inputManager.SendRumbleToController(m_focusedController, 0.2f, 0.2f);
+                m_inputManager.SendRumbleToController(m_focusedController, 0.1f, 0.1f);
             }
         }
         else if(m_currentRayTarget != null)
         {
             m_currentRayTarget.color = Color.white;
             m_currentRayTarget = null;
+        }
+    }
+
+    private void UpdateDominantController()
+    {
+        if (m_inputManager.LeftControllerData.TriggerValue > m_inputManager.RightControllerData.TriggerValue)
+        {
+            m_focusedController = InputManager.ControllerType.LEFT;
+        }
+        else if (m_inputManager.RightControllerData.TriggerValue > m_inputManager.LeftControllerData.TriggerValue)
+        {
+            m_focusedController = InputManager.ControllerType.RIGHT;
         }
     }
 }
